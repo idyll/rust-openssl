@@ -76,7 +76,7 @@ impl PKCS7 {
         }
     }
 
-    pub fn decrypt(&self, pkey: &PKeyRef, cert: &X509Ref) -> Result<Vec<u8>, ErrorStack> {
+    pub fn decrypt<T>(&self, pkey: &PKeyRef<T>, cert: &X509Ref) -> Result<Vec<u8>, ErrorStack> {
         ffi::init();
 
         let output = MemBio::new()?;
@@ -104,7 +104,7 @@ impl PKCS7 {
         }
     }
 
-    pub fn sign(signcert: &X509Ref, pkey: &PKeyRef, certs: &Stack<X509>, input: &[u8], flags: PKCS7Flags) -> Result<PKCS7, ErrorStack> {
+    pub fn sign<T>(signcert: &X509Ref, pkey: &PKeyRef<T>, certs: &Stack<X509>, input: &[u8], flags: PKCS7Flags) -> Result<PKCS7, ErrorStack> {
         ffi::init();
 
         let input_bio = MemBioSlice::new(input)?;

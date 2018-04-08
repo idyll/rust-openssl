@@ -61,6 +61,7 @@ pub mod string;
 pub mod symm;
 pub mod version;
 pub mod x509;
+pub mod crypto;
 
 fn cvt_p<T>(r: *mut T) -> Result<*mut T, ErrorStack> {
     if r.is_null() {
