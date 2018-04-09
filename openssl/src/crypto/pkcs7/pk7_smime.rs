@@ -6,7 +6,7 @@ use error::ErrorStack;
 use stack::Stack;
 use foreign_types::ForeignType;
 use symm::Cipher;
-use pkey::PKeyRef;
+use pkey::{PKeyRef};
 use libc::c_int;
 use std::ptr::null_mut;
 use foreign_types::ForeignTypeRef;
@@ -149,8 +149,7 @@ mod tests {
     use x509::X509;
     use x509::store::X509StoreBuilder;
     use symm::Cipher;
-    use crypto::pkcs7::pk7_smime::PKCS7_STREAM;
-    use crypto::pkcs7::pk7_smime::PKCS7_DETACHED;
+    use crypto::pkcs7::pk7_smime::PKCS7Flags;
     use crypto::pkcs7::pk7_smime::PKCS7;
     use pkey::PKey;
     use stack::Stack;
@@ -163,7 +162,7 @@ mod tests {
         certs.push(cert.clone()).unwrap();
         let message: String = String::from("foo");
         let cypher = Cipher::des_ede3_cbc();
-        let flags = PKCS7_STREAM;
+        let flags = PKCS7Flags::PKCS7_STREAM;
         let pkey = include_bytes!("../../../test/key.pem");
         let pkey = PKey::private_key_from_pem(pkey).unwrap();
 
@@ -185,7 +184,7 @@ mod tests {
         let cert = X509::from_pem(cert).unwrap();
         let certs = Stack::new().unwrap();
         let message: String = String::from("foo");
-        let flags = PKCS7_STREAM | PKCS7_DETACHED;
+        let flags = PKCS7Flags::PKCS7_STREAM | PKCS7Flags::PKCS7_DETACHED;
         let pkey = include_bytes!("../../../test/key.pem");
         let pkey = PKey::private_key_from_pem(pkey).unwrap();
         let mut store_builder = X509StoreBuilder::new().expect("should succeed");
@@ -218,7 +217,7 @@ mod tests {
         let cert = X509::from_pem(cert).unwrap();
         let certs = Stack::new().unwrap();
         let message: String = String::from("foo");
-        let flags = PKCS7_STREAM;
+        let flags = PKCS7Flags::PKCS7_STREAM;
         let pkey = include_bytes!("../../../test/key.pem");
         let pkey = PKey::private_key_from_pem(pkey).unwrap();
         let mut store_builder = X509StoreBuilder::new().expect("should succeed");
